@@ -1,8 +1,33 @@
-<h1>Restaurants page</h1>
+<% include partials/header %>
 
-<% restaurants.forEach(function(restaurant){ %>
-	<li><%=restaurant.name %></li> 
-	<br>
-	<img src="<%=restaurant.image %>">
-	<br>
-<%	}) %>
+<div class="container">
+	<header class="jumbotron">
+		<div class="container">
+			<h1>Restaurants page</h1>
+			<p>View some restaurants in Barcelona</p>
+		</div>
+	</header>
+
+	<h3>Most popular restaurants</h3>
+		<br>
+	<div class="row" style="display: flex; flex-wrap: wrap;">
+
+
+		<% restaurants.forEach(function(restaurant){ %>
+		<div class="col-md-3 col-sm-6">
+			<div class="thumbnail">
+				<img src="<%=restaurant.image %>">
+				<div class="caption">
+					<%=restaurant.name %> 
+				</div>
+			</div>
+
+		</div>
+		<br>
+		<%	}) %>
+	</div>
+
+	<a href="/restaurants/new" class="btn btn-info">Create a new restaurant</a>
+</div>
+
+<% include partials/footer %>

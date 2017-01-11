@@ -1,0 +1,14 @@
+
+<% include partials/header %>
+
+
+
+<form action="/restaurants" method="POST">
+	<input type="text" name="name" placeholder="new restaurant">
+	<input type="text" name="image" placeholder="image url">
+	<!-- Where name will be what we'll access with req.body.name or rq.body.image -->
+	<button>Submit</button>
+</form>
+
+<a href="/restaurants">Go back</a>
+<% include partials/footer %>

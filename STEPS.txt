@@ -1,0 +1,7 @@
+1) create folder and inside the app.js which will be the server.
+2) run in terminal (in the proper folder): npm install express
+3) require express in app.js
+4) npm install ejs
+5) npm install body-parser --save
+6) require body-parser
+
