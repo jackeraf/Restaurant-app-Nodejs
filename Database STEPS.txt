@@ -1,0 +1,18 @@
+1)  Ejecutar en terminal desde C:\MongoDB\Server\3.4\bin
+
+
+mongod --directoryperdb --dbpath C:/MongoDB/Server/3.4/data/db --logpath C:/MongoDB/Server/3.4/log/mongodb.log --logappend 
+
+
+2)  Después de ver como está rulando (con el underscore ese intermitente) vamos a la carpeta bin y type mongo.
+
+3) Comandos que se pueden hacer en mongo:
+- use demo (donde demo es el nomre de la base de datos)
+- db.dogs.insert({name: "whatever"})   DOnde dogs es la collection.
+- db.dogs.find()  (si no le ponemos nada nos devolverá toda la colección).
+- db.dogs.find({name: "Rusty"})   (to find dog with name Rusty)
+- db.dogs.update({name: "Rusty"}, {$set: {name: "Tater"}})   (to update/change attribute BUT we must type $set because if not it will remove the other attributes that we don't change)
+-  db.dogs.remove({breed: "Blake"})  (To delete from db)
+- show dbs  (to display db)
+
+4) Crear objetos en un js file usando mongoose y luego para que se guarde darle a node (filename).js y vualá! ahora podremos ver en el db folder como está creada la db y desde la carpeta bin abrir cmd y ver las dbs.

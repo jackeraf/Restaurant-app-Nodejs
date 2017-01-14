@@ -1,0 +1,22 @@
+
+var mongoose= require ("mongoose");
+
+
+
+// SCHEMA SETUP:
+
+var restaurantsSchema = new mongoose.Schema({
+	name: String,
+	image: String,
+	description: String,
+	comments: [
+				{
+					type: mongoose.Schema.Types.ObjectId,
+					ref: "Comment"
+				}
+			]
+});
+
+var Restaurant= mongoose.model("Restaurants", restaurantsSchema);
+
+module.exports= Restaurant;

@@ -1,14 +1,25 @@
 
 <% include partials/header %>
 
+<div class="container">
+	<div class="row">
+	<h2 style="text-align: center;">Post a new restaurant</h2>
+		<div style="width: 30%; margin: 0 auto;">
+		<!-- margin 0 for top and bottom and auto for left and right -->
+			<form action="/restaurants" method="POST">
+				<input class= "form-control" type="text" name="name" placeholder="new restaurant">
+				<input class= "form-control" type="text" name="image" placeholder="image url">
+				<input class= "form-control" type="text" name="description" placeholder="description">
+				<!-- Where name will be what we'll access with req.body.name or rq.body.image -->
+				<button class="btn btn-lg btn-default btn-info">Submit</button>
+			</form>
+			<br>
+			<a href="/restaurants">Go back</a>
+		</div>
+	</div>
+</div>
 
 
-<form action="/restaurants" method="POST">
-	<input type="text" name="name" placeholder="new restaurant">
-	<input type="text" name="image" placeholder="image url">
-	<!-- Where name will be what we'll access with req.body.name or rq.body.image -->
-	<button>Submit</button>
-</form>
 
-<a href="/restaurants">Go back</a>
+
 <% include partials/footer %>
