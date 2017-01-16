@@ -31,6 +31,10 @@ router.post("/",isLoggedIn, function(req, res){
 		}else{
 			console.log(req.body.comment)
 			Comment.create(req.body.comment, function(err, created){
+				// add username of the current user creating the comment
+				created.author.id = req.user._id
+				created.author.username= req.user.username
+				created.save()
 				foundRestaurant.comments.push(created);
 				foundRestaurant.save();
 				res.redirect("/restaurants/" + foundRestaurant._id)
