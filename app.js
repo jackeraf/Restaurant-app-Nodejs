@@ -16,22 +16,6 @@ mongoose.connect("mongodb://localhost/yelp_clone");
 
 
 
-// Restaurant.create(
-// 	{
-// 		name: "Italian restaurant", 
-// 		image: "https://s-media-cache-ak0.pinimg.com/originals/76/7e/ac/767eac254b7370e49f56b406f08cb905.jpg",
-// 		description: "Amazing restaurant!" 
-// 	}, function(err, restaurant){
-// 		if (err) {
-// 			console.log(err);
-// 		}else{
-// 			console.log("Newly created restaurant")
-// 			console.log(restaurant)
-// 		}
-// });
-
-
-
 app.get("/", function(req, res){
 	res.render("landing.ejs")
 });
@@ -44,7 +28,7 @@ app.get("/restaurants", function(req, res){
 		if (err) {
 			console.log("error")
 		} else{
-			res.render("index.ejs", {restaurants: allRestaurants});
+			res.render("restaurants/index.ejs", {restaurants: allRestaurants});
 		}
 	});
 });
@@ -67,23 +51,61 @@ app.post("/restaurants", function(req, res){
 });
 
 app.get("/restaurants/new", function(req, res){
-	res.render("new.ejs")
+	res.render("restaurants/new.ejs")
 });
 
 
 // SHOW RESTAURANT
 app.get("/restaurants/:id", function(req, res){
 
-	Restaurant.findById(req.params.id, function(err, foundRestaurant){
+	Restaurant.findById(req.params.id).populate("comments").exec(function(err, foundRestaurant){
 		if (err) {
 			console.log("Restaurant not found")
 		} else{
-
-			res.render("show.ejs", {restaurant: foundRestaurant});
+			console.log(foundRestaurant)
+			res.render("restaurants/show.ejs", {restaurant: foundRestaurant});
 
 		}
 	});
 });
+
+
+
+
+// ============================
+// COMMENTS ROUTES
+// ============================
+
+app.get("/restaurants/:id/comments/new", function(req, res){
+
+	Restaurant.findById(req.params.id, function(err, foundRestaurant){
+		if (err) {
+			console.log("Restaurant not found")
+		} else{
+			console.log(foundRestaurant)
+			res.render("comments/new.ejs", {restaurant: foundRestaurant});
+
+		}
+	});
+});
+
+
+app.post("/restaurants/:id/comments", function(req, res){
+	Restaurant.findById(req.params.id, function(err, foundRestaurant){
+		if (err) {
+			console.log(err);
+			res.redirect("/restaurants");
+		}else{
+			console.log(req.body.comment)
+			Comment.create(req.body.comment, function(err, created){
+				foundRestaurant.comments.push(created);
+				foundRestaurant.save();
+				res.redirect("/restaurants/" + foundRestaurant._id)
+			})
+		}
+	});
+
+})
 
 app.listen(3000, function(){
 	console.log("Server running")

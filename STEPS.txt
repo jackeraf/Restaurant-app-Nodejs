@@ -4,4 +4,7 @@
 4) npm install ejs
 5) npm install body-parser --save
 6) require body-parser
+7) User authentification:  npm install passport passport-local passport-local-mongoose express-session --save
+
+
 
