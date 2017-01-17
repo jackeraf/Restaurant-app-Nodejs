@@ -1,0 +1,25 @@
+
+<% include ../partials/header %>
+
+<div class="container">
+	<div class="row">
+	<h2 style="text-align: center;">Edit <%=restaurant.name %></h2>
+		<div style="width: 30%; margin: 0 auto;">
+		<!-- margin 0 for top and bottom and auto for left and right -->
+			<form action="/restaurants/<%=restaurant._id %>?_method=PUT" method="POST">
+				<input class= "form-control" type="text" name="name" value="<%=restaurant.name %>">
+				<input class= "form-control" type="text" name="image" value="<%=restaurant.image %>">
+				<input class= "form-control" type="text" name="description" value="<%=restaurant.description %>">
+				<!-- Where name will be what we'll access with req.body.name or rq.body.image -->
+				<button class="btn btn-lg btn-default btn-info">Submit</button>
+			</form>
+			<br>
+			<a href="/restaurants">Go back</a>
+		</div>
+	</div>
+</div>
+
+
+
+
+<% include ../partials/footer %>

@@ -58,6 +58,55 @@ router.get("/:id", function(req, res){
 	});
 });
 
+// EDIT restaurant
+
+
+router.get("/:id/edit", function(req, res){
+
+	Restaurant.findById(req.params.id, function(err, foundRestaurant){
+		if (err) {
+			res.redirect("/restaurants")
+		}else{
+			res.render("restaurants/edit.ejs", {restaurant: foundRestaurant})
+		}
+	});
+	
+})
+
+// UPDATE route
+
+router.put("/:id", function(req, res){
+	// find and update the correct restaurant
+	var data= {name: req.body.name, image: req.body.image, description: req.body.description}
+	Restaurant.findByIdAndUpdate(req.params.id, data, function(err, updatedRestaurant){
+		if (err) {
+			res.redirect("/restaurants")
+		}else{
+			res.redirect("/restaurants/" + req.params.id)
+		}
+	})
+})
+
+// DESTROY route
+
+router.delete("/:id", function(req, res){
+	Restaurant.findByIdAndRemove(req.params.id, function(err, removed){
+		if (err) {
+			res.redirect("/restaurants")
+		}
+		res.redirect("/restaurants")
+	})
+
+})
+
+
+
+
+
+
+
+
+
 
 // Function is logged in?
 

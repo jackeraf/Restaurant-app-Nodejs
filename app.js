@@ -4,6 +4,7 @@ var bodyParser= require ("body-parser");
 var mongoose= require ("mongoose");
 var passport= require ("passport");
 var LocalStrategy= require ("passport-local");
+var methodOverride= require("method-override")
 var User= require("./models/user")
 
 var Restaurant = require("./models/restaurants"),
@@ -12,6 +13,11 @@ Comment = require("./models/comment"),
 seedDB = require("./seeds")
 
 // seedDB();
+
+app.use(methodOverride("_method"));
+
+var path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 
 var commentRoutes= require("./routes/comments"),
 	restaurantRoutes= require("./routes/restaurants"),
