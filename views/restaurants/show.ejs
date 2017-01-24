@@ -21,11 +21,13 @@
 					<h4><a href=""><%= restaurant.name %></a></h4>
 					<p><%= restaurant.description %></p>
 					<p> <em> Submitted by: </em><%= restaurant.author.username %></p>
-					<a class="btn btn-warning" href="/restaurants/<%=restaurant._id %>/edit">Edit</a>
-					<form id="delete_button" action="/restaurants/<%=restaurant._id %>?_method=DELETE" method= "POST">
-						<button class="btn btn-danger">Delete</button>
+					<% if (currentUser && restaurant.author.id.equals(currentUser._id)){%>
+						<a class="btn btn-warning" href="/restaurants/<%=restaurant._id %>/edit">Edit</a>
+						<form id="delete_button" action="/restaurants/<%=restaurant._id %>?_method=DELETE" method= "POST">
+							<button class="btn btn-danger">Delete</button>
 
-					</form>
+						</form>
+					<% }%>
 				</div>
 			</div>
 			<div class="well">
@@ -39,6 +41,14 @@
 								<strong>Author: </strong><%= comment.author.username %>
 								<span class="pull-right"> 10 days ago</span>
 								<p><%= comment.text %></p>
+								<% if (currentUser && comment.author.id.equals(currentUser._id)){%>
+								<a class="btn btn-xs btn-warning" href="/restaurants/<%=restaurant._id %>/comments/<%=comment._id %>/edit">Edit
+								</a>
+								<form id="delete_button" action="/restaurants/<%=restaurant._id %>/comments/<%=comment._id %>?_method=DELETE" method= "POST">
+									<button class="btn btn-xs btn-danger">Delete</button>
+
+								</form>
+								<% }%>
 							</div>
 
 						</div>

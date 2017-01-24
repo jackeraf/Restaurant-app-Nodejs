@@ -1,20 +1,21 @@
 var express = require ("express");
-var app = express();
-var bodyParser= require ("body-parser");
-var mongoose= require ("mongoose");
-var passport= require ("passport");
-var LocalStrategy= require ("passport-local");
-var methodOverride= require("method-override")
-var User= require("./models/user")
-
-var Restaurant = require("./models/restaurants"),
-Comment = require("./models/comment"),
-// User = require("./models/user"),
-seedDB = require("./seeds")
+	 app = express(),
+	 bodyParser= require ("body-parser"),
+	 mongoose= require ("mongoose"),
+	 passport= require ("passport"),
+	 flash= require("connect-flash"),
+	 LocalStrategy= require ("passport-local"),
+	 methodOverride= require("method-override"),
+	 User= require("./models/user"),
+	 Restaurant = require("./models/restaurants"),
+	Comment = require("./models/comment"),
+	// User = require("./models/user"),
+	seedDB = require("./seeds");
 
 // seedDB();
 
 app.use(methodOverride("_method"));
+app.use(flash());
 
 var path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -45,6 +46,9 @@ passport.deserializeUser(User.deserializeUser())
 // to pass the current user to every single template
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
+	res.locals.error= req.flash("error");
+	res.locals.success= req.flash("success");
+	// to pass currentUser and flash message to every single template
 	next();
 	// if we don't put the next it'll just top and not execute the callbacks from the routes after it
 });

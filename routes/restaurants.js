@@ -2,7 +2,8 @@
 
 var express = require("express")
 var router= express.Router({mergeParams: true});
-var Restaurant= require("../models/restaurants")
+var Restaurant= require("../models/restaurants");
+var middleware= require("../middleware/index.js");
 
 
 router.get("/", function(req, res){
@@ -17,7 +18,7 @@ router.get("/", function(req, res){
 	});
 });
 
-router.post("/",isLoggedIn, function(req, res){
+router.post("/", middleware.isLoggedIn, function(req, res){
 	// get data from the form and add to restaurants array
 	var nameRestaurant= req.body.name;
 	var image= req.body.image;
@@ -39,7 +40,7 @@ router.post("/",isLoggedIn, function(req, res){
 	
 });
 
-router.get("/new",isLoggedIn, function(req, res){
+router.get("/new", middleware.isLoggedIn, function(req, res){
 	res.render("restaurants/new.ejs")
 });
 
@@ -61,21 +62,20 @@ router.get("/:id", function(req, res){
 // EDIT restaurant
 
 
-router.get("/:id/edit", function(req, res){
-
+router.get("/:id/edit", middleware.checkRestaurantOwnership, function(req, res){
+	// is user logged in
+	
 	Restaurant.findById(req.params.id, function(err, foundRestaurant){
-		if (err) {
-			res.redirect("/restaurants")
-		}else{
-			res.render("restaurants/edit.ejs", {restaurant: foundRestaurant})
-		}
-	});
+
+		res.render("restaurants/edit.ejs", {restaurant: foundRestaurant})
+
+	});	
 	
 })
 
 // UPDATE route
 
-router.put("/:id", function(req, res){
+router.put("/:id", middleware.checkRestaurantOwnership, function(req, res){
 	// find and update the correct restaurant
 	var data= {name: req.body.name, image: req.body.image, description: req.body.description}
 	Restaurant.findByIdAndUpdate(req.params.id, data, function(err, updatedRestaurant){
@@ -89,7 +89,7 @@ router.put("/:id", function(req, res){
 
 // DESTROY route
 
-router.delete("/:id", function(req, res){
+router.delete("/:id", middleware.checkRestaurantOwnership, function(req, res){
 	Restaurant.findByIdAndRemove(req.params.id, function(err, removed){
 		if (err) {
 			res.redirect("/restaurants")
@@ -99,22 +99,5 @@ router.delete("/:id", function(req, res){
 
 })
 
-
-
-
-
-
-
-
-
-
-// Function is logged in?
-
-function isLoggedIn(req, res, next){
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.redirect("/login")
-}
 
 module.exports= router;
