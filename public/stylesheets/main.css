@@ -1,6 +1,5 @@
 
 
-
 #delete_button{
 	display: inline;
 }
@@ -14,3 +13,28 @@
 	display: block;
     margin: 0 auto;
 }
+
+.landing_text{
+	text-align: center;
+	padding-top: 23%;
+	color: white;
+
+}
+
+body{
+	background-image: url("../images/to69trrwlri-shanice-garcia.jpg");
+	background-size: cover;
+	background-position: top 20px center;
+	height: 100%;
+	background-repeat: no-repeat;
+}
+
+.landing_text h1,h3{
+	font-weight: 200;
+	font-size: 3em;
+}
+
+hr{
+	width: 600px;
+}
+
